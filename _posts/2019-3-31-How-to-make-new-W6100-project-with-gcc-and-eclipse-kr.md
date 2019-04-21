@@ -4,13 +4,12 @@ title: GCC기반의 Eclipse 개발 환경에서 빈 프로젝트로 W6100 EVB �
 date:   2019-03-31 
 author: James Kim
 categories: W6100
-tags:	git, github, eclipse, gcc, createProject
 ---
 
 ## Prerequites ##
 * ARM GCC Tool Chain 설치
 * GCC IDE 설치
-* ARM Cortex를 위한 CDT pulgin 설치
+* ARM Cortex를 위한 CDT plugin 설치
 
 ## 빈프로젝트 만들기 ##
 * File->New->C/C++ Project를 선택한 후, 다음 대화상자에서 C Managed Build를 선택한다.
@@ -257,80 +256,4 @@ void USART_Configuration(void)
 
 10. project build후 binary를 다운로드하여 실행하면 다음과 같은 메시지 출력을 볼 수 있다.
     <img src="/assets/images/W6100_EVB/first-debug-message.PNG" width="450" >
-
-## W6100 EVB의 주요 Peripheral 설정하기 ##
-### TIMER ###
-### GPIO ###
-### SPI ###
-### FSMC ###
-
-## io6Library 가져오기 ##ㄴ
-### git repository에 submodule로 가져오기 ###
-git을 이용해서 프로젝트 버전관리를 하는 경우라면 io6Library 폴더를 최신 버전으로 업데이트 하기 위해서 submodule로 복제할 수 있다.
-1. src/ 폴더로 이동한 다음, 아래 명령을 수행한다.
-```shell
-$ git submodule add https://github.com/Wiznet/io6Library
-Cloning into 'C:/workspace/test_workspace/W6100-EVB-gcc-eclipse/src/io6Library'...
-remote: Enumerating objects: 109, done.
-remote: Counting objects: 100% (109/109), done.
-remote: Compressing objects: 100% (81/81), done.
-remote: Total 109 (delta 31), reused 74 (delta 24), pack-reused 0
-Receiving objects: 100% (109/109), 2.14 MiB | 2.28 MiB/s, done.
-Resolving deltas: 100% (31/31), done.
-warning: LF will be replaced by CRLF in .gitmodules.
-The file will have its original line endings in your working directory
-```
-
-### local에 직접 저장하는 방법 ###
-1. github repository에 이동한다.
-<img src="/assets/images/W6100_EVB/io6Library-github-repository.png" width="450" >
-2. "Clone or download" 메뉴를 클릭한다.
-<img src="/assets/images/W6100_EVB/io6Library-download-zip.png" width="450" >
-
-## 환경 설정하기 ##
-1. "Paths and Symbols" 에 라이브러리 위치 추가
-<img src="/assets/images/W6100_EVB/io6Library-path-update.PNG" width="450" >
-
-2. "Paths and Symbols"->"Source Location"에서 Exclusion pattern을 수정한다. ".../stm32f10x_tim.c", ".../stm32f10x_spi.c", ".../stm32f10x_fsmc.c" 를 리스트에서 제거한다.
-
-3. main.c()를 수정한다.
-    * 
-
-
-```c
-
-// PB_05, PB_12 pull down
-*(volatile uint32_t *)(0x41003070) = 0x61; // RXDV - set pull down (PB_12)
-*(volatile uint32_t *)(0x41002054) = 0x01; // PB 05 AFC
-*(volatile uint32_t *)(0x41003054) = 0x61; // COL  - set pull down (PB_05)
-*(volatile uint32_t *)(0x41002058) = 0x01; // PB 06 AFC
-*(volatile uint32_t *)(0x41003058) = 0x61; // DUP  - set pull down (PB_06)
-
-// PHY reset pin pull-up
-*(volatile uint32_t *)(0x410020D8) = 0x01; // PD 06 AFC[00 : zero / 01 : PD06]
-*(volatile uint32_t *)(0x410030D8) = 0x02; // PD 06 PADCON
-*(volatile uint32_t *)(0x45000004) = 0x40; // GPIOD DATAOUT [PD06 output 1]
-*(volatile uint32_t *)(0x45000010) = 0x40; // GPIOD OUTENSET    
-
-
-
-#ifdef __DEF_USED_MDIO__ 
-    
-    mdio_init(GPIOB, W7500x_MDC, W7500x_MDIO); // mdio Init //
-    mdio_write(GPIOB, PHYREG_CONTROL, CNTL_RESET); // PHY Reset
-
-```
-
-```c
-while(1)
-{
-    val = mdio_read(GPIOB, PHYREG_STATUS);
-    if(val & 0x0004) // ## debugging: PHY link
-        break;
-}
-
-val=mdio_read(GPIOB, PHYREG_CONTROL); // PHY Reset
-printf("PHYREG_CONTROL(0x%02x) : 0x%04x\r\n", PHYREG_CONTROL, val);
-```
-
 

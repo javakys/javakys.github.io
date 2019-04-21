@@ -4,7 +4,6 @@ title: VAR Analysis
 date:   2019-02-18 
 author: James Kim
 categories: Open-Source-Hardware
-tags:	VAR, open-source
 ---
 
 ## Ethernet Shield for Arduino - W5500 Chipset ##

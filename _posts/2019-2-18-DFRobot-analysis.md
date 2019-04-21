@@ -4,7 +4,6 @@ title: DFRobot Analysis
 date:   2019-02-18 
 author: James Kim
 categories: Open-Source-Hardware
-tags:	DFRobot, open-source
 ---
 
 ## Xboard Relay by DFRobots ##

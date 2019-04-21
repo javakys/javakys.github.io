@@ -4,7 +4,6 @@ title: How to set the project up for W6100 EVB
 date:   2019-03-26
 author: James Kim
 categories: W6100
-tags:	git, github, eclipse, gcc, createProject
 ---
 
 ## Hardware Configuration ##

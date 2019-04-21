@@ -4,7 +4,6 @@ title: How to use git with github.com
 date:   2019-02-21 
 author: James Kim
 categories: Git-Github
-tags:	git, github, branch
 ---
 
 ## Remote branch를 local branch로 가져오기 ##

@@ -4,7 +4,6 @@ title: How to Lock and Unlock Flash Memory on W7500x
 date:   2019-02-15 
 author: James Kim
 categories: W7500x
-tags:	jekyll welcome
 cover:  "/assets/images/ispcmd_init.PNG"
 ---
 
