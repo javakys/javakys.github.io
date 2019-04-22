@@ -5,6 +5,7 @@ date:   2019-02-15
 author: James Kim
 categories: W7500x
 cover:  "/assets/images/ispcmd_init.PNG"
+comments: true
 ---
 
 
