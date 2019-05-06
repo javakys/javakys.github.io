@@ -40,6 +40,7 @@ TFTP 통신에서 주고 받는 명령 또는 응답의 메시지 구조는 아�
 
 ## Simple TFTP Client의 코드 구성 ##
 1. UDP 소켓 생성
+
 ```c
     case SOCK_CLOSED:
         socketcreate(sn, TFTP_TEMP_PORT, ip_mode);
@@ -48,6 +49,7 @@ printf("%d:Opened, UDP loopback, port [%d] as %s\r\n", sn, TFTP_TEMP_PORT, get_m
 ```
 
 2. RRQ 패킷 전송으로 TFTP 세션 개시
+
 ```c
     case SOCK_UDP:
         switch(g_tftp_state)
@@ -60,10 +62,11 @@ printf("%d:Opened, UDP loopback, port [%d] as %s\r\n", sn, TFTP_TEMP_PORT, get_m
                 printf("curr state: STATE_RRQ\r\n");
                 g_tftp_state = STATE_RRQ;
             }
-
-break;
+        break;
 ```
+
 * send_rrq() 함수
+
 ```c
 uint16_t send_rrq(uint8_t * buf, uint8_t* filename, uint8_t sn, uint8_t* server_ip, uint8_t ip_mode)
 {
@@ -88,13 +91,16 @@ uint16_t send_rrq(uint8_t * buf, uint8_t* filename, uint8_t sn, uint8_t* server_
 ```
 
 3. 응답이 OACK 패킷이면 Option 처리를 한다.
+
 ```c
 else if(current_opcode == TFTP_OACK)
                 {
                     ret = proc_oack(buf, ret, sn, ip_mode, destip, destport);
 }
 ```
+
 * send_oack() 함수
+
 ```c
 uint16_t send_oack(uint8_t * buf, uint8_t sn, uint8_t ip_mode, uint8_t* destip, uint16_t destport)
 {
@@ -117,6 +123,7 @@ uint16_t send_oack(uint8_t * buf, uint8_t sn, uint8_t ip_mode, uint8_t* destip, 
 ```
 
 4. 응답이 ERROR 패킷이면 Error 처리를 한다.
+
 ```c
 else if(current_opcode == TFTP_ERROR)
                 {
@@ -128,6 +135,7 @@ else if(current_opcode == TFTP_ERROR)
 ```
 
 5. 응답이 DATA 패킷이면 데이터를 수신해서 UART 포트로 출력한다. 이때 수신한 데이터의 길이가 Block size도다 작으면 수신을 종료하고 STATE_DONE으로 상태를 변경한다.
+
 ```c
                 if(current_opcode == TFTP_DATA)
                 {
@@ -144,6 +152,7 @@ else if(current_opcode == TFTP_ERROR)
 ```
 
 * proc_data() 함수
+
 ```c
 uint16_t proc_data(uint8_t * buf, uint8_t sn, uint8_t ip_mode, uint8_t* destip, uint16_t destport)
 {
