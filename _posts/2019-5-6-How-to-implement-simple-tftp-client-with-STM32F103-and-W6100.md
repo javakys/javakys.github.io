@@ -62,9 +62,9 @@ printf("%d:Opened, UDP loopback, port [%d] as %s\r\n", sn, TFTP_TEMP_PORT, get_m
             }
 
 break;
-
-...
-
+```
+* send_rrq() 함수
+```c
 uint16_t send_rrq(uint8_t * buf, uint8_t* filename, uint8_t sn, uint8_t* server_ip, uint8_t ip_mode)
 {
     uint16_t buf_size=0, ret;
@@ -93,9 +93,9 @@ else if(current_opcode == TFTP_OACK)
                 {
                     ret = proc_oack(buf, ret, sn, ip_mode, destip, destport);
 }
-
-...
-
+```
+* send_oack() 함수
+```c
 uint16_t send_oack(uint8_t * buf, uint8_t sn, uint8_t ip_mode, uint8_t* destip, uint16_t destport)
 {
     uint16_t buf_size, ret;
@@ -141,9 +141,10 @@ else if(current_opcode == TFTP_ERROR)
                         }
                     }
 }
+```
 
-...
-
+* proc_data() 함수
+```c
 uint16_t proc_data(uint8_t * buf, uint8_t sn, uint8_t ip_mode, uint8_t* destip, uint16_t destport)
 {
     TFTP_DATA_T *data = (TFTP_DATA_T *)buf;
