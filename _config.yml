@@ -73,12 +73,12 @@ descriptions:
 #     desc: Follow me on Twitter            # Description to display as link title, etc
 #     share: true                           # Include in the "Share" section of posts
 social:
-  - name: Twitter
-    icon: twitter
-    username: javakys
-    url: https://twitter.com/javakys
-    desc: Follow me on Twitter
-    share: true
+  # - name: Twitter
+  #   icon: twitter
+  #   username: javakys
+  #   url: https://twitter.com/javakys
+  #   desc: Follow me on Twitter
+  #   share: false
 
   - name: Facebook
     icon: facebook
